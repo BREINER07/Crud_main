@@ -16,7 +16,7 @@ def conectar(vhost, vuser, vpass, vdb):
 @app.route('/')
 def consulta_general():
     try:
-        conn = conectar('localhost', 'root', '1234', 'gestor_contrasena')
+        conn = conectar('localhost', 'root', 'root', 'gestor_contrasena')
         cur = conn.cursor()
         cur.execute(""" SELECT * FROM baul """)
         datos.fetcha11()
@@ -38,7 +38,7 @@ def consulta_general():
 @app.route('/consulta_individual/<codigo>', methods=['GET'])
 def consulta_individual(codigo):
     try:
-        conn = conectar('localhost', 'root', '1234', 'gestor_contrasena')
+        conn = conectar('localhost', 'root', 'root', 'gestor_contrasena')
         cur = conn.cursor()
         cur.execute(""" SELECT * FROM baul where id_baul='{0}' """.format(codigo))
         datos = cur.fetchone()
@@ -56,7 +56,7 @@ def consulta_individual(codigo):
 @app.route('/registro/', methods=['POST'])
 def registro():
     try:
-        conn = conectar('localhost', 'root', '1234', 'gestor_contrasena')
+        conn = conectar('localhost', 'root', 'root', 'gestor_contrasena')
         cur = conn.cursor()
         x = cur.execute(""" INSERT INTO baul (plataforma, usuario, clave) values('{0}', '{1}', '{2}')""".format(request.json['plataforma'], request.json['usuario'], request.json['clave']))
         conn.commit # para confirmar la insercion de la informacion
@@ -70,7 +70,7 @@ def registro():
 @app.route('/eliminar/<codigo>', methods=['DELETE'])
 def eliminar(codigo):
     try:
-        conn = conectar('localhost', 'root', '1234', 'gestor_contrasena')
+        conn = conectar('localhost', 'root', 'root', 'gestor_contrasena')
         cur = conn.cursor()
         x = cur.execute(""" DELETE FROM baul where id_baul='{0}' """.format(codigo))
         conn.commit()
@@ -84,7 +84,7 @@ def eliminar(codigo):
 @app.route('/actualizar/<codigo>', methods=['PUT'])
 def actualizar(codigo):
     try:
-        conn = conectar('localhost', 'root', '1234', 'gestor_contrasena')
+        conn = conectar('localhost', 'root', 'root', 'gestor_contrasena')
         cur = conn.cursor()
         x = cur.execute(""" UPDATE baul set plataforma = '{0}', usuario = '{1}', clave = '{2}' where id_baul={3} """.format(request.json['plataforma'], request.json['usuario'], request.json['clave'], codigo))
         conn.commit # para confirmar la insercion de la informacion
